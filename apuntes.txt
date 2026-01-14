@@ -1,0 +1,92 @@
+PASOS:
+
+1. CRUD.
+2. URLS.
+3. HTML.
+4. PAGINADOR.
+5. FILTRADO.
+
+1. CRUD:
+
+Importar las clases de las vistas:
+from django.views.generic import TemplateView, CreateView...
+from django.urls import reverse_lazy // Para cuando se complete el CRUID redirija la pagina
+
+Empezar por el create hasta el read/visualizar:
+1. Create.
+2. Update.
+3. Delete.
+4. TemplateView.
+
+NOTA: Hay que crear una carpeta donde estan las templates con el nombre de la aplicacion y un archivo HTML que contenga el formulario para el create y update.
+El nombre del archivo es: nombreModelo_form.html, despues insertas el codigo.
+
+CREATE/UPDATE:
+
+class NombreFuncion/Clase(CreateView/UpdateView):
+    model = NombreModelo
+    fields = ['campo1', 'campo2', 'campoN']
+    success_url = reverse_lazy('nombrePagina')
+
+NOTA: El nombre de la pagina es el que pones en la URL del proyecto
+Ejemplo: path('url', views.nombreVista.as_view(), name='nombre').
+
+
+Para el Create y update en el path de la url se tiene quie poner view=nombreVista.as_view()
+Ejemplo: path('create | update', view=views.nombreVista.as_view(), name='nombre').
+
+DELETE:
+
+class NombreFuncion/Clase(DeleteView):
+    model = NombreModelo
+    success_url = reverse_lazy('nombrePagina')
+
+
+READ: Vamos a juntar el PAGINADOR
+
+Primero hay que importar el paginador:
+
+from django.core.paginator import Paginator
+
+class NombreVista(TemplateView):
+    template_name = 'nombreTemplate.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(VistaUsers, self).get_context_data(**kwargs)
+
+        users = Usuario.objects.all()
+
+        paginador = Paginator(users, 20)
+        pagina = self.request.GET.get("page",1)
+        context['users'] = paginador.get_page(pagina)
+
+        return context
+
+1. Obtenemos los datos del modelo con Modelo.objects.all().
+2. Creamos un objeto de tipo Paginator y en su constructor inicializamos la variable con los datos del modelo y la cantidad de elementos por pagina.
+3. Creamos una variable que obtiene la pagina correspondiente.
+3. Llevamos al context todos los datos con su paginado con: paginador.get_page(pagina)
+
+METODOS DEL PAGINADOR:
+
+-has_previous
+-number
+-next_page_number
+-paginator.num_pages
+
+
+FILTRADO:
+
+nombreValor = self.request.GET.get("nombreValor", "")
+if nombreValor:
+    skins = Skin.objects.filter(nombre__icontains=aspecto)
+else:
+    skins = Skin.objects.all()
+
+HTML:
+
+<input type="text" name="nombreValor" value="{{ nombreValor }}" placeholder="Buscar usuario...">
+
+ 
+
+
