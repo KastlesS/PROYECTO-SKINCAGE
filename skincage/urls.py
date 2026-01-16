@@ -16,10 +16,10 @@ Including another URLconf
 """
 from os import name
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from skins.views import VistaSkins, SkinCreate, SkinUpdate, SkinDeleteView, Home
 from users.views import VistaUsers, CreateUser, DeleteUser, UpdateUser
-from login.views import LoginFormView
+from login.views import LoginFormView2, Logout
 
 urlpatterns = [
     path('inicio/', Home.as_view(), name="home"),
@@ -32,5 +32,7 @@ urlpatterns = [
     path('user/create', view=CreateUser.as_view(), name='create-user'),
     path('user/update/<int:pk>', view=UpdateUser.as_view(), name='update-user'),
     path('user/delete/<int:pk>', view=DeleteUser.as_view(), name='delete-user'),
-    path('', LoginFormView.as_view(), name='login'),
+    path('', LoginFormView2.as_view(), name='login'),
+    path('logout/', Logout.as_view(), name='logout'),
+    path('accounts/', include('allauth.urls')),
 ]

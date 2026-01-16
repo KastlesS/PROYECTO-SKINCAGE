@@ -2,12 +2,13 @@ from typing import Any
 from django.http import HttpRequest
 from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 
 
 # Create your views here.
-class LoginFormView(LoginView):
+class LoginFormView2(LoginView):
     template_name = 'portfolio/login.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -19,3 +20,6 @@ class LoginFormView(LoginView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Iniciar Sesión'
         return context
+    
+class Logout(LogoutView):
+    next_page = reverse_lazy('login')
