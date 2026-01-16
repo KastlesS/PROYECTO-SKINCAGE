@@ -9,6 +9,7 @@ skins.forEach(item=>{
     divSkin.className = "skin";
     divSkin.appendChild(item);
     contenedorSkins.appendChild(divSkin);
+    console.log(divSkin);
 });
 
 

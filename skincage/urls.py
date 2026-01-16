@@ -19,9 +19,10 @@ from django.contrib import admin
 from django.urls import path
 from skins.views import VistaSkins, SkinCreate, SkinUpdate, SkinDeleteView, Home
 from users.views import VistaUsers, CreateUser, DeleteUser, UpdateUser
+from login.views import LoginFormView
 
 urlpatterns = [
-    path('', Home.as_view(), name="home"),
+    path('inicio/', Home.as_view(), name="home"),
     path('skins/', VistaSkins.as_view(), name='skins'),
     path('admin/', admin.site.urls),
     path('create/', view=SkinCreate.as_view(), name="crear"),
@@ -30,5 +31,6 @@ urlpatterns = [
     path('user/', VistaUsers.as_view(), name='user'),
     path('user/create', view=CreateUser.as_view(), name='create-user'),
     path('user/update/<int:pk>', view=UpdateUser.as_view(), name='update-user'),
-    path('user/delete/<int:pk>', view=DeleteUser.as_view(), name='delete-user')
+    path('user/delete/<int:pk>', view=DeleteUser.as_view(), name='delete-user'),
+    path('', LoginFormView.as_view(), name='login'),
 ]

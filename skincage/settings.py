@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'movements',
     'crispy_forms',
     'crispy_bootstrap5',
+    'login',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +149,5 @@ MESSAGE_TAGS = {messages.ERROR: 'danger'}
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+LOGIN_REDIRECT_URL = 'inicio/'
