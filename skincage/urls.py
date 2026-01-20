@@ -15,11 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from os import name
+from rest_framework import routers
+from rest_framework.routers import DefaultRouter
 from django.contrib import admin
 from django.urls import path, include
 from skins.views import VistaSkins, SkinCreate, SkinUpdate, SkinDeleteView, Home
 from users.views import VistaUsers, CreateUser, DeleteUser, UpdateUser
 from login.views import LoginFormView2, Logout
+from skins.api.views import SkinListViewSet, SkinCRUDView
+
+router = routers.DefaultRouter()
+router.register('skin-list', SkinListViewSet, basename='skin-list')
+router.register('skin-crud', SkinCRUDView, basename='skin-crud')
 
 urlpatterns = [
     path('inicio/', Home.as_view(), name="home"),
@@ -35,4 +42,5 @@ urlpatterns = [
     path('', LoginFormView2.as_view(), name='login'),
     path('logout/', Logout.as_view(), name='logout'),
     path('accounts/', include('allauth.urls')),
+    path('api/', include(router.urls)),
 ]
