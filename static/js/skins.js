@@ -13,3 +13,9 @@ skins.forEach(item=>{
 });
 
 
+const URL = "http://127.0.0.1:8000/api/skin-list/";
+
+fetch(URL).then(response=>response.ok?response.json():response.reject()).then(skins=>{
+    console.log(skins);
+    skins.results.forEach(skin=>console.log(skin));
+}).catch(error=>console.log(error));
